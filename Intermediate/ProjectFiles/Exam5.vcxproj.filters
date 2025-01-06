@@ -11,6 +11,8 @@
     <None Include="..\..\Source\Exam5Editor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
     <None Include="..\..\.vsconfig" />
     <Filter Include="Config">
       <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
@@ -43,6 +45,12 @@
       <Filter>Source\Exam5</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Exam5\MyActor.h">
+      <Filter>Source\Exam5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Exam5\MyActor1.cpp">
+      <Filter>Source\Exam5</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Exam5\MyActor1.h">
       <Filter>Source\Exam5</Filter>
     </ClCompile>
   </ItemGroup>
