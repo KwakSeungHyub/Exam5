@@ -60,11 +60,10 @@ void AMyActor1::Move()
 
         
 
-        // 10회 이상 이동시 50% 확률로 이벤트 발생
-        if (i + 1 > 10) {
+        // 10회 이상 이동시 50% 확률로 이벤트 발생, 이동거리 & 이벤트 발생 횟수 출력
+        if (i >= 9) {
             float MoveDistance = CalculateMoveDistance(PreviousPosition, NewPosition);
             TotalMoveDistance += MoveDistance;
-            UE_LOG(LogTemp, Warning, TEXT("%d!!!!!!!!!!!"), i + 1);
             if (TriggerEvent(i))
             {
                 UE_LOG(LogTemp, Warning, TEXT("Step %d: Event triggered!"), i + 1);
