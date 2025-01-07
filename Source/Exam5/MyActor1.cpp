@@ -23,9 +23,11 @@ int32 AMyActor1::Step()
 }
 
 // 랜덤 이벤트 발생 함수 (50% 확률)
-bool AMyActor1::TriggerEvent()
+bool AMyActor1::TriggerEvent(int i)
 {
-    return FMath::RandBool();  // 50% 확률로 이벤트 발생
+    if (i > 10)
+        return FMath::RandBool();  // 50% 확률로 이벤트 발생
+    else return false;
 }
 
 // 이동 거리 계산 함수
@@ -34,7 +36,7 @@ float AMyActor1::CalculateMoveDistance(FVector2D StartPosition, FVector2D EndPos
     return FVector2D::Distance(StartPosition, EndPosition);
 }
 
-// 10회 랜덤 이동 및 로그 출력
+// 10회 랜덤 이동 및 로그 출력이었지만 이벤트 적용 및 좌표 표시 적용이 됐는지 확인하기 위해 15회로 증가
 void AMyActor1::Move()
 {
     UE_LOG(LogTemp, Warning, TEXT("Starting Position: (%d, %d)"), (int32)CurrentPosition.X, (int32)CurrentPosition.Y);
@@ -56,26 +58,28 @@ void AMyActor1::Move()
         CurrentPosition.X = NewPosition.X;
         CurrentPosition.Y = NewPosition.Y;
 
-        // 이동 거리 출력
-        UE_LOG(LogTemp, Warning, TEXT("Step %d: New Position: (%d, %d) | Distance from last position: %.2f"), i + 1, (int32)CurrentPosition.X, (int32)CurrentPosition.Y, MoveDistance);
+        
 
-        // 50% 확률로 이벤트 발생
-        if (TriggerEvent())
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Step %d: Event triggered!"), i + 1);
-            TotalEventsTriggered++;
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Step %d: No event triggered."), i + 1);
-        }
+        // 10회 이상 이동시 50% 확률로 이벤트 발생
+        if (i + 1 > 10) {
+            UE_LOG(LogTemp, Warning, TEXT("%d!!!!!!!!!!!"), i + 1);
+            if (TriggerEvent(i))
+            {
+                UE_LOG(LogTemp, Warning, TEXT("Step %d: Event triggered!"), i + 1);
+                TotalEventsTriggered++;
+            }
+            else
+            {
+                UE_LOG(LogTemp, Warning, TEXT("Step %d: No event triggered."), i + 1);
+            }
 
-        PreviousPosition = CurrentPosition; // 이전 위치 업데이트
+            PreviousPosition = CurrentPosition; // 이전 위치 업데이트
+            // 10회 이동 후 총 이동 거리와 이벤트 발생 횟수 출력
+            UE_LOG(LogTemp, Warning, TEXT("Total Move Distance: %.2f"), TotalMoveDistance);
+            UE_LOG(LogTemp, Warning, TEXT("Total Events Triggered: %d"), TotalEventsTriggered);
+        }
     }
-
-    // 10회 이동 후 총 이동 거리와 이벤트 발생 횟수 출력
-    UE_LOG(LogTemp, Warning, TEXT("Total Move Distance: %.2f"), TotalMoveDistance);
-    UE_LOG(LogTemp, Warning, TEXT("Total Events Triggered: %d"), TotalEventsTriggered);
+    
 }
 
 // Called every frame
