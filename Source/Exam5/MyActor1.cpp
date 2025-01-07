@@ -51,8 +51,8 @@ void AMyActor1::Move()
         FVector2D NewPosition = CurrentPosition;
         NewPosition.X += XStep;
         NewPosition.Y += YStep;
-        float MoveDistance = CalculateMoveDistance(PreviousPosition, NewPosition);
-        TotalMoveDistance += MoveDistance;
+        
+        
 
         // 이동 적용
         CurrentPosition.X = NewPosition.X;
@@ -62,6 +62,8 @@ void AMyActor1::Move()
 
         // 10회 이상 이동시 50% 확률로 이벤트 발생
         if (i + 1 > 10) {
+            float MoveDistance = CalculateMoveDistance(PreviousPosition, NewPosition);
+            TotalMoveDistance += MoveDistance;
             UE_LOG(LogTemp, Warning, TEXT("%d!!!!!!!!!!!"), i + 1);
             if (TriggerEvent(i))
             {
@@ -75,7 +77,7 @@ void AMyActor1::Move()
 
             PreviousPosition = CurrentPosition; // 이전 위치 업데이트
             // 10회 이동 후 총 이동 거리와 이벤트 발생 횟수 출력
-            UE_LOG(LogTemp, Warning, TEXT("Total Move Distance: %.2f"), TotalMoveDistance);
+            UE_LOG(LogTemp, Warning, TEXT("Total Move Distance After 10 + Move: %.2f"), TotalMoveDistance);
             UE_LOG(LogTemp, Warning, TEXT("Total Events Triggered: %d"), TotalEventsTriggered);
         }
     }
